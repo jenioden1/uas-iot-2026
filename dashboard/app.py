@@ -29,13 +29,32 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* ──────────────────────────────────────────────
+   PALETTE (Agriculture / Earth + Sky)
+   ──────────────────────────────────────────────
+   --bg-0       : #07120e   (deepest base)
+   --bg-1       : #0f1d18   (surface)
+   --bg-2       : #16271f   (elevated surface)
+   --border     : #234539   (subtle border)
+   --border-2   : #2f5b49   (active border)
+   --text-1     : #eaf5ee   (primary text)
+   --text-2     : #b6cdc1   (secondary text)
+   --text-3     : #7d9588   (muted)
+   --green-1    : #10b981   (primary brand)
+   --green-2    : #34d399
+   --green-3    : #6ee7b7
+   --sky        : #38bdf8   (water / irrigate)
+   --amber      : #f59e0b   (sun / fertilizer)
+   --rose       : #fb7185   (alert / pesticide)
+   --violet     : #a78bfa   (latency / signal)
+*/
+
 /* Global */
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
+    color: #eaf5ee;
 }
-.stApp {
-    background-color: #f4f1ea;
-}
+
 .main .block-container {
     padding-top: 1.5rem;
     padding-bottom: 2rem;
@@ -44,70 +63,102 @@ html, body, [class*="css"] {
 
 /* Header */
 .dashboard-header {
-    background: linear-gradient(135deg, #2c4c3b 0%, #4a7c59 50%, #8fbc8f 100%);
+    background:
+        radial-gradient(circle at 0% 0%, rgba(52, 211, 153, 0.18) 0%, transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.12) 0%, transparent 55%),
+        linear-gradient(135deg, #0f1d18 0%, #16271f 60%, #1c3328 100%);
     padding: 1.8rem 2rem;
     border-radius: 16px;
     margin-bottom: 1.5rem;
-    color: white;
-    box-shadow: 0 8px 32px rgba(46, 204, 113, 0.25);
+    color: #eaf5ee;
+    border: 1px solid #234539;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 .dashboard-header h1 {
     margin: 0; font-size: 1.8rem; font-weight: 700;
+    background: linear-gradient(90deg, #6ee7b7 0%, #34d399 60%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 .dashboard-header p {
-    margin: 0.3rem 0 0 0; opacity: 0.9; font-size: 0.95rem;
+    margin: 0.4rem 0 0 0; font-size: 0.95rem;
+    color: #b6cdc1;
 }
 
 /* KPI Cards */
 .kpi-card {
-    background: linear-gradient(145deg, #fcfbf8, #f4f1ea);
-    border: 1px solid #e3e0d8;
+    background: linear-gradient(145deg, #16271f 0%, #0f1d18 100%);
+    border: 1px solid #234539;
     border-radius: 14px;
     padding: 1.2rem 1rem;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .kpi-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    border-color: #2f5b49;
+    box-shadow: 0 10px 28px rgba(16, 185, 129, 0.18);
 }
 .kpi-icon { font-size: 1.6rem; }
-.kpi-label { font-size: 0.75rem; color: #6b7280; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.3rem; }
-.kpi-value { font-size: 1.5rem; font-weight: 700; color: #0d4f2b; margin-top: 0.1rem; }
+.kpi-label {
+    font-size: 0.72rem; color: #7d9588; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.6px; margin-top: 0.35rem;
+}
+.kpi-value {
+    font-size: 1.5rem; font-weight: 700; color: #6ee7b7;
+    margin-top: 0.15rem;
+}
 
 /* Section */
 .section-title {
-    font-size: 1.15rem; font-weight: 600; color: #2c4c3b;
-    border-left: 4px solid #8fbc8f; padding-left: 0.8rem;
-    margin: 1.5rem 0 1rem 0;
+    font-size: 1.15rem; font-weight: 600; color: #eaf5ee;
+    border-left: 4px solid #10b981; padding-left: 0.8rem;
+    margin: 1.6rem 0 1rem 0;
 }
 
 /* Recommendation */
 .rec-card {
     border-radius: 12px; padding: 1rem 1.2rem;
-    margin-bottom: 0.6rem; border-left: 5px solid;
+    margin-bottom: 0.6rem;
+    border: 1px solid; border-left-width: 5px;
     font-size: 0.9rem;
+    backdrop-filter: blur(2px);
 }
-.rec-warning { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
-.rec-danger  { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
-.rec-info    { background: #dbeafe; border-color: #3b82f6; color: #1e40af; }
-.rec-success { background: #d1fae5; border-color: #10b981; color: #065f46; }
+.rec-card strong { display: block; margin-bottom: 0.25rem; font-size: 0.95rem; }
+.rec-warning {
+    background: rgba(245, 158, 11, 0.10);
+    border-color: rgba(245, 158, 11, 0.35);
+    border-left-color: #f59e0b;
+    color: #fde7b8;
+}
+.rec-danger  {
+    background: rgba(251, 113, 133, 0.10);
+    border-color: rgba(251, 113, 133, 0.35);
+    border-left-color: #fb7185;
+    color: #fcd5db;
+}
+.rec-info    {
+    background: rgba(56, 189, 248, 0.10);
+    border-color: rgba(56, 189, 248, 0.35);
+    border-left-color: #38bdf8;
+    color: #cfeaff;
+}
+.rec-success {
+    background: rgba(16, 185, 129, 0.10);
+    border-color: rgba(16, 185, 129, 0.35);
+    border-left-color: #10b981;
+    color: #c8f1de;
+}
 
 /* Footer */
 .footer {
     text-align: center; padding: 1.5rem 0 0.5rem 0;
-    color: #9ca3af; font-size: 0.8rem;
-    border-top: 1px solid #e5e7eb; margin-top: 2rem;
+    color: #7d9588; font-size: 0.8rem;
+    border-top: 1px solid #234539; margin-top: 2rem;
 }
 
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #eceae1 0%, #f4f1ea 100%);
-}
-section[data-testid="stSidebar"] .stMarkdown h2 {
-    color: #0d4f2b;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -260,9 +311,33 @@ sample_size = min(5000, len(df))
 df_sample = df.sample(n=sample_size, random_state=42).sort_values("UAV_Timestamp") if len(df) > sample_size else df.sort_values("UAV_Timestamp")
 
 chart_colors = {
-    "primary": "#8fbc8f", "secondary": "#7ab893", "accent": "#73a5c6",
-    "warm": "#d9a05b", "danger": "#c96f6f", "purple": "#9581b3",
+    "primary":   "#34d399",  # green
+    "secondary": "#6ee7b7",  # mint
+    "accent":    "#38bdf8",  # sky / water
+    "warm":      "#f59e0b",  # amber / sun
+    "danger":    "#fb7185",  # rose
+    "purple":    "#a78bfa",  # violet
 }
+
+# Konsisten: setiap "Action" dipetakan ke warna semantik
+color_map = {
+    "Irrigate":         "#38bdf8",  # air → biru langit
+    "Monitor":          "#34d399",  # normal → hijau
+    "Apply Fertilizer": "#f59e0b",  # pupuk → amber
+    "Apply Pesticide":  "#fb7185",  # peringatan → rose
+}
+
+# Layout default seragam untuk semua chart
+PLOT_LAYOUT = dict(
+    template="plotly_dark",
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    font=dict(color="#eaf5ee", family="Inter"),
+    title_font=dict(size=15, color="#eaf5ee"),
+    margin=dict(l=20, r=20, t=50, b=20),
+    xaxis=dict(showgrid=False, zeroline=False, color="#b6cdc1"),
+    yaxis=dict(gridcolor="rgba(234,245,238,0.08)", zeroline=False, color="#b6cdc1"),
+)
 
 col1, col2 = st.columns(2)
 
@@ -272,12 +347,8 @@ with col1:
         title="🌡️ Temperature Over Time",
         labels={"UAV_Timestamp": "Waktu", "Temperature": "Temperature (norm)"},
     )
-    fig_temp.update_traces(line=dict(color=chart_colors["warm"], width=1.5))
-    fig_temp.update_layout(
-        template="plotly_white", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=380,
-        title_font=dict(size=15), margin=dict(l=20, r=20, t=50, b=20),
-        xaxis=dict(showgrid=False), yaxis=dict(gridcolor="#f0f0f0"),
-    )
+    fig_temp.update_traces(line=dict(color=chart_colors["warm"], width=1.8))
+    fig_temp.update_layout(height=380, **PLOT_LAYOUT)
     st.plotly_chart(fig_temp, use_container_width=True)
 
 with col2:
@@ -286,12 +357,8 @@ with col2:
         title="💧 Moisture Over Time",
         labels={"UAV_Timestamp": "Waktu", "Moisture": "Moisture (norm)"},
     )
-    fig_moist.update_traces(line=dict(color=chart_colors["accent"], width=1.5))
-    fig_moist.update_layout(
-        template="plotly_white", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=380,
-        title_font=dict(size=15), margin=dict(l=20, r=20, t=50, b=20),
-        xaxis=dict(showgrid=False), yaxis=dict(gridcolor="#f0f0f0"),
-    )
+    fig_moist.update_traces(line=dict(color=chart_colors["accent"], width=1.8))
+    fig_moist.update_layout(height=380, **PLOT_LAYOUT)
     st.plotly_chart(fig_moist, use_container_width=True)
 
 # ──────────────────────────────────────────────
@@ -304,21 +371,13 @@ col3, col4 = st.columns(2)
 with col3:
     action_counts = df["Action_Suggested"].value_counts().reset_index()
     action_counts.columns = ["Action", "Count"]
-    color_map = {
-        "Irrigate": "#73a5c6", "Monitor": "#8fbc8f",
-        "Apply Fertilizer": "#d9a05b", "Apply Pesticide": "#c96f6f",
-    }
     fig_bar = px.bar(
         action_counts, x="Action", y="Count", color="Action",
         title="🎯 Distribusi Action Suggested",
         color_discrete_map=color_map,
     )
-    fig_bar.update_layout(
-        template="plotly_white", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=400, showlegend=False,
-        title_font=dict(size=15), margin=dict(l=20, r=20, t=50, b=20),
-        xaxis=dict(showgrid=False), yaxis=dict(gridcolor="#f0f0f0"),
-    )
-    fig_bar.update_traces(marker_line_width=0, opacity=0.9)
+    fig_bar.update_layout(height=400, showlegend=False, **PLOT_LAYOUT)
+    fig_bar.update_traces(marker_line_width=0, opacity=0.95)
     st.plotly_chart(fig_bar, use_container_width=True)
 
 with col4:
@@ -328,13 +387,19 @@ with col4:
     fig_heat = px.imshow(
         corr_matrix, text_auto=".2f",
         title="🔥 Heatmap Korelasi Fitur Utama",
-        color_continuous_scale="Tealrose", aspect="auto",
+        color_continuous_scale=[
+            [0.0, "#fb7185"],   # negatif kuat → rose
+            [0.25, "#7d3a48"],
+            [0.5, "#0f1d18"],   # netral → background
+            [0.75, "#1f6b52"],
+            [1.0, "#34d399"],   # positif kuat → green
+        ],
+        color_continuous_midpoint=0,
+        zmin=-1, zmax=1,
+        aspect="auto",
         labels=dict(color="Korelasi"),
     )
-    fig_heat.update_layout(
-        template="plotly_white", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=400,
-        title_font=dict(size=15), margin=dict(l=20, r=20, t=50, b=20),
-    )
+    fig_heat.update_layout(height=400, **PLOT_LAYOUT)
     st.plotly_chart(fig_heat, use_container_width=True)
 
 # ──────────────────────────────────────────────
@@ -349,25 +414,27 @@ with col5:
         color_discrete_map=color_map,
     )
     fig_box.update_layout(
-        template="plotly_white", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=400,
-        title_font=dict(size=15), margin=dict(l=20, r=20, t=50, b=20),
-        legend=dict(orientation="h", yanchor="bottom", y=-0.35, xanchor="center", x=0.5, font=dict(size=10)),
+        height=400, **PLOT_LAYOUT,
+    )
+    fig_box.update_layout(
+        legend=dict(orientation="h", yanchor="bottom", y=-0.35,
+                    xanchor="center", x=0.5, font=dict(size=10, color="#b6cdc1")),
     )
     st.plotly_chart(fig_box, use_container_width=True)
 
 with col6:
     fig_scatter = px.scatter(
         df_sample, x="Temperature", y="Humidity",
-        color="Action_Suggested", opacity=0.6,
+        color="Action_Suggested", opacity=0.65,
         title="🔬 Scatter: Temperature vs Humidity",
         color_discrete_map=color_map,
         labels={"Temperature": "Temperature (norm)", "Humidity": "Humidity (norm)"},
     )
-    fig_scatter.update_traces(marker=dict(size=4))
+    fig_scatter.update_traces(marker=dict(size=4, line=dict(width=0)))
+    fig_scatter.update_layout(height=400, **PLOT_LAYOUT)
     fig_scatter.update_layout(
-        template="plotly_white", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=400,
-        title_font=dict(size=15), margin=dict(l=20, r=20, t=50, b=20),
-        legend=dict(orientation="h", yanchor="bottom", y=-0.35, xanchor="center", x=0.5, font=dict(size=10)),
+        legend=dict(orientation="h", yanchor="bottom", y=-0.35,
+                    xanchor="center", x=0.5, font=dict(size=10, color="#b6cdc1")),
     )
     st.plotly_chart(fig_scatter, use_container_width=True)
 
@@ -429,12 +496,8 @@ with col7:
         title="🔋 Energy Consumed (mAh) Trend",
         labels={"UAV_Timestamp": "Waktu", "Energy_Consumed_mAh": "Energy (norm)"},
     )
-    fig_energy.update_traces(line=dict(color="#c96f6f", width=1.5))
-    fig_energy.update_layout(
-        template="plotly_white", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=370,
-        title_font=dict(size=15), margin=dict(l=20, r=20, t=50, b=20),
-        xaxis=dict(showgrid=False), yaxis=dict(gridcolor="#f0f0f0"),
-    )
+    fig_energy.update_traces(line=dict(color=chart_colors["danger"], width=1.8))
+    fig_energy.update_layout(height=370, **PLOT_LAYOUT)
     st.plotly_chart(fig_energy, use_container_width=True)
 
 with col8:
@@ -443,12 +506,8 @@ with col8:
         title="⏱️ Latency (ms) Trend",
         labels={"UAV_Timestamp": "Waktu", "Latency_ms": "Latency (norm)"},
     )
-    fig_latency.update_traces(line=dict(color="#9581b3", width=1.5))
-    fig_latency.update_layout(
-        template="plotly_white", paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=370,
-        title_font=dict(size=15), margin=dict(l=20, r=20, t=50, b=20),
-        xaxis=dict(showgrid=False), yaxis=dict(gridcolor="#f0f0f0"),
-    )
+    fig_latency.update_traces(line=dict(color=chart_colors["purple"], width=1.8))
+    fig_latency.update_layout(height=370, **PLOT_LAYOUT)
     st.plotly_chart(fig_latency, use_container_width=True)
 
 # ──────────────────────────────────────────────
